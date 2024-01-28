@@ -1,0 +1,115 @@
+/* button:focus,
+textarea:focus {
+  outline: red;
+} */
+
+div.themes-container {
+  border-color: rgb(177, 174, 174);
+}
+
+.btn-theme svg {
+  stroke: rgb(177, 174, 174);
+}
+
+.btn-theme:hover svg {
+  stroke: rgb(255, 255, 255);
+}
+
+.btn-theme.selected {
+  background-color: rgb(80, 78, 78);
+}
+
+.btn-theme.selected svg {
+  stroke: rgb(255, 254, 254);
+}
+
+body {
+  background-color: rgb(22, 22, 22);
+}
+
+h1 {
+  color: rgb(177, 174, 174);
+}
+
+/* div.hero-section {
+  box-shadow: 0px 0px 150px -100px rgb(255, 255, 255);
+} */
+
+textarea {
+  border-color: rgb(255, 255, 255);
+  background-color: rgb(80, 78, 78);
+  color: rgb(255, 255, 255);
+}
+
+div.cta-buttons button {
+  border-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+}
+
+div.cta-buttons button:hover {
+  background-color: rgb(59, 59, 59);
+}
+
+div.cta-buttons button svg {
+  fill: rgb(255, 255, 255);
+  stroke: rgb(255, 255, 255);
+}
+
+aside p {
+  color: rgb(255, 255, 255);
+}
+
+aside button {
+  border-color: rgb(96, 184, 206);
+  color: rgb(96, 184, 206);
+}
+
+aside button:hover {
+  background-color: rgb(96, 184, 206, 0.25);
+}
+
+div.output {
+  border-color: rgb(96, 184, 206);
+  background-color: rgb(96, 184, 206, 0.15);
+  /* box-shadow: -50px 0px 150px -90px rgb(96, 184, 206); */
+}
+
+div.output p {
+  color: rgb(255, 255, 255);
+}
+
+div.output p.nothing {
+  opacity: 0.5;
+}
+
+section h2 {
+  border-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+}
+
+section div {
+  border-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+}
+
+section div#history ul li::after {
+  background-color: rgb(96, 184, 206);
+}
+
+section div ul li button svg {
+  fill: rgb(255, 255, 255);
+}
+
+footer {
+  background-color: rgb(48, 48, 48);
+  color: rgb(255, 255, 255);
+}
+
+footer a svg {
+  fill: #ffffff;
+}
+
+svg.list-icon .cls-2 {
+  stroke: rgb(255, 255, 255);
+  stroke-width: 5px;
+}
