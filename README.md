@@ -10,4 +10,4 @@ Hecho con ❤ por Maycol Vivanco con tecnologías nativas: **HTML**, **CSS** y *
 
 Proyecto hospedado por **Gitub Pages**
 
-Link del proyecto: https://encrypter-challenge.github.io/
+Link del proyecto: https://mikevm97.github.io/encrypter-challenge
