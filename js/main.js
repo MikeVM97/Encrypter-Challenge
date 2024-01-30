@@ -102,7 +102,7 @@ decryptBtn.addEventListener("click", () => {
 });
 
 function encrypt(input) {
-  const upperCase = /[A-Z]/g;
+  const upperCase = /[A-Z]/;
   const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'".·;,$#%&\/~¡!¿?]/g;
   if (upperCase.test(input) && specials.test(input)) {
     throw new Error(
@@ -134,6 +134,19 @@ function encrypt(input) {
 }
 
 function decrypt(input) {
+  const upperCase = /[A-Z]/;
+  const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'".·;,$#%&\/~¡!¿?]/g;
+  if (upperCase.test(input) && specials.test(input)) {
+    throw new Error(
+      "No se permiten letras en mayúscula ni caracteres especiales"
+    );
+  }
+  if (upperCase.test(input)) {
+    throw new Error("No se permiten letras en mayúscula");
+  }
+  if (specials.test(input)) {
+    throw new Error("No se permiten tildes o caracteres especiales");
+  }
   return input.replace(/(ai|enter|imes|ober|ufat)/g, function (match, code) {
     switch (code) {
       case "ai":
