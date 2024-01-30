@@ -113,3 +113,8 @@ svg.list-icon .cls-2 {
   stroke: rgb(255, 255, 255);
   stroke-width: 5px;
 }
+
+div#alert-container {
+  color: rgb(0, 0, 0);
+  background-color: rgb(255, 255, 255);
+}
