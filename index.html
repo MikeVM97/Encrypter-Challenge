@@ -3,19 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link rel="shortcut icon" href="img/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/light-theme.css" id="theme-style" />
     <link rel="stylesheet" href="./css/responsive.css" />
     <title>Encriptador Online</title>
   </head>
   <body>
-    <header class="flex justify-between items-center">
-      <h1 class="text-center w-full">Encriptar / Desencriptar texto online</h1>
-      <div
-        class="flex gap-x-4 border w-fit rounded-full px-3 py-2 themes-container"
-      >
-        <button type="button" class="rounded-full p-2 btn-theme" id="light">
+    <header>
+      <h1>Encriptar / Desencriptar texto online</h1>
+      <div class="themes-container">
+        <button type="button" class="btn-theme" id="light">
           <svg
             fill="none"
             stroke-linecap="round"
@@ -36,7 +34,7 @@
             <path d="M18.36 5.64l1.42-1.42"></path>
           </svg>
         </button>
-        <button type="button" class="rounded-full p-2 btn-theme" id="system">
+        <button type="button" class="btn-theme" id="system">
           <svg
             fill="none"
             stroke-linecap="round"
@@ -51,7 +49,7 @@
             <path d="M12 17v4"></path>
           </svg>
         </button>
-        <button type="button" class="rounded-full p-2 btn-theme" id="dark">
+        <button type="button" class="btn-theme" id="dark">
           <svg
             fill="none"
             stroke-linecap="round"
@@ -74,14 +72,9 @@
           cols="30"
           rows="10"
           placeholder="Ingrese el texto aquí"
-          class="border-2 resize-none p-2 focus:outline-none w-full"
         ></textarea>
-        <div class="w-full flex justify-evenly cta-buttons">
-          <button
-            type="button"
-            class="flex items-center justify-center gap-x-2"
-            id="encrypt-btn"
-          >
+        <div class="cta-buttons">
+          <button type="button" id="encrypt-btn">
             <svg
               viewBox="0 0 595.28 841.89"
               width="30"
@@ -99,11 +92,7 @@
             </svg>
             <span>Encriptar</span>
           </button>
-          <button
-            type="button"
-            class="flex items-center justify-center gap-x-2"
-            id="decrypt-btn"
-          >
+          <button type="button" id="decrypt-btn">
             <svg
               viewBox="0 0 595.28 841.89"
               width="30"
@@ -267,7 +256,7 @@
       <div id="history"></div>
     </section>
     <footer>
-      <span> Hecho con ❤ por Maycol </span>
+      <p>Hecho con <span style="color: red">❤</span> por Maycol</p>
       <a
         href="https://github.com/MikeVM97"
         target="_blank"
