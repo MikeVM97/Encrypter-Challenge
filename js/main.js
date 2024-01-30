@@ -49,11 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* Check and load History */
-  // const history = JSON.parse(localStorage.getItem("history"));
+  const history = JSON.parse(localStorage.getItem("history"));
 
-  if (history) {
-    actualizarLista();
-  } else {
+  if (history) actualizarLista();
+
+  if (!history || history.length == 0) {
+    const container = document.getElementById("history");
     const p = document.createElement("p");
     p.classList.add("empty");
     p.innerHTML = "Tu historial se encuentra vacío";
@@ -227,20 +228,20 @@ function actualizarLista() {
       button.innerHTML = trashIconSvg;
 
       const html = `
-    <summary>
-      ${index + 1}
-    </summary>
-    <div>
-      <p>
-        Entrada:
-        <strong>${item[0]}</strong>
-      </p>
-      <hr/><hr/>
-      <p>
-        Salida:
-        <strong>${item[1]}</strong>
-      </p>
-    </div>`;
+      <summary>
+        ${index + 1}
+      </summary>
+      <div>
+        <p>
+          Entrada:
+          <strong>${item[0]}</strong>
+        </p>
+        <hr/><hr/>
+        <p>
+          Salida:
+          <strong>${item[1]}</strong>
+        </p>
+      </div>`;
 
       details.innerHTML = html;
       li.appendChild(details);
