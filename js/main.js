@@ -62,13 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (history) actualizarLista();
 
-  if (!history || history.length == 0) {
-    const container = document.getElementById("history");
-    const p = document.createElement("p");
-    p.classList.add("empty");
-    p.innerHTML = "Tu historial se encuentra vacío";
-    container.appendChild(p);
-  }
+  if (!history || history.length == 0) historyEmptyMessage();
 });
 
 function applyLightTheme() {
@@ -100,59 +94,11 @@ const output = document.querySelector(".output");
 const outputContainer = document.getElementById("output-container");
 
 encryptBtn.addEventListener("click", () => {
-  try {
-    const inputValue = input.value;
-    const outputValue = encrypt(inputValue);
-
-    output.innerHTML = `<p class="value">${outputValue}</p>`;
-
-    /* Update history */
-    updateHistory(inputValue, outputValue);
-
-    /* Create & Show button */
-    insertButton(outputContainer, inputValue, outputValue);
-  } catch (error) {
-    /* Show the error message */
-    const alertContainer = document.createElement("div");
-    alertContainer.setAttribute("id", "alert-container");
-    alertContainer.innerHTML = alertIcon + `<span>${error.message}</span>`;
-    document.body.appendChild(alertContainer);
-
-    setTimeout(() => {
-      alertContainer.classList.add("hiding");
-    }, 3000);
-    setTimeout(() => {
-      alertContainer.remove();
-    }, 5000);
-  }
+  processText(encrypt);
 });
 
 decryptBtn.addEventListener("click", () => {
-  try {
-    const inputValue = input.value;
-    const outputValue = decrypt(inputValue);
-
-    output.innerHTML = `<p class="value">${outputValue}</p>`;
-
-    /* Update history */
-    updateHistory(inputValue, outputValue);
-
-    /* Create & Show button */
-    insertButton(outputContainer, inputValue, outputValue);
-  } catch (error) {
-    /* Show the error message */
-    const alertContainer = document.createElement("div");
-    alertContainer.setAttribute("id", "alert-container");
-    alertContainer.innerHTML = alertIcon + `<span>${error.message}</span>`;
-    document.body.appendChild(alertContainer);
-
-    setTimeout(() => {
-      alertContainer.classList.add("hiding");
-    }, 2000);
-    setTimeout(() => {
-      alertContainer.remove();
-    }, 4000);
-  }
+  processText(decrypt);
 });
 
 function encrypt(input) {
@@ -264,20 +210,24 @@ function updateHistoryNow(unorderedList, history) {
 function actualizarLista() {
   const history = JSON.parse(localStorage.getItem("history")) ?? [];
 
+  if (!history || history.length === 0) {
+    historyEmptyMessage();
+    return;
+  }
+
   const container = document.getElementById("history");
   container.innerHTML = "";
 
   const ul = document.createElement("ul");
 
-  history &&
-    history.forEach((item, index) => {
-      const li = document.createElement("li");
-      const details = document.createElement("details");
-      const button = document.createElement("button");
-      button.setAttribute("type", "button");
-      button.innerHTML = trashIconSvg;
+  history.forEach((item, index) => {
+    const li = document.createElement("li");
+    const details = document.createElement("details");
+    const button = document.createElement("button");
+    button.setAttribute("type", "button");
+    button.innerHTML = trashIconSvg;
 
-      const html = `
+    const html = `
       <summary>
         ${index + 1}
       </summary>
@@ -293,19 +243,52 @@ function actualizarLista() {
         </p>
       </div>`;
 
-      details.innerHTML = html;
-      li.appendChild(details);
-      li.appendChild(button);
-      ul.appendChild(li);
+    details.innerHTML = html;
+    li.appendChild(details);
+    li.appendChild(button);
+    ul.appendChild(li);
 
-      button.addEventListener("click", () => {
-        const newHistory = history
-          .slice(0, index)
-          .concat(history.slice(index + 1));
-        localStorage.setItem("history", JSON.stringify(newHistory));
-        actualizarLista();
-      });
+    button.addEventListener("click", () => {
+      const newHistory = history
+        .slice(0, index)
+        .concat(history.slice(index + 1));
+      localStorage.setItem("history", JSON.stringify(newHistory));
+      actualizarLista();
     });
+  });
 
-  history && container.appendChild(ul);
+  container.appendChild(ul);
+}
+
+function historyEmptyMessage() {
+  const container = document.getElementById("history");
+  container.innerHTML = `<p class="empty">Tu historial se encuentra vacío</p>`;
+}
+
+function processText(callback) {
+  try {
+    const inputValue = input.value;
+    const outputValue = callback(inputValue);
+
+    output.innerHTML = `<p class="value">${outputValue}</p>`;
+
+    /* Update history */
+    updateHistory(inputValue, outputValue);
+
+    /* Create & Show button */
+    insertButton(outputContainer, inputValue, outputValue);
+  } catch (error) {
+    /* Show the error message */
+    const alertContainer = document.createElement("div");
+    alertContainer.setAttribute("id", "alert-container");
+    alertContainer.innerHTML = alertIcon + `<span>${error.message}</span>`;
+    document.body.appendChild(alertContainer);
+
+    setTimeout(() => {
+      alertContainer.classList.add("hiding");
+    }, 3000);
+    setTimeout(() => {
+      alertContainer.remove();
+    }, 5000);
+  }
 }
