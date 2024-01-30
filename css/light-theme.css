@@ -6,7 +6,7 @@ div.themes-container {
   stroke: rgb(54, 53, 53);
 }
 
-.btn-theme:hover svg {
+.btn-theme:not(.selected):hover svg {
   stroke: rgb(0, 0, 0);
 }
 

@@ -1,35 +1,73 @@
 @import url("https://fonts.googleapis.com/css2?family=Honk:MORF@15&family=Laila&display=swap");
 
+/* GLOBAL STYLES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button {
+  border-width: 0px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* HEADING */
 header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   column-gap: 1rem;
+  row-gap: 20px;
+  padding: 10px;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 1.5rem;
+}
+
+/* MAIN */
+div.themes-container {
+  display: flex;
+  flex-direction: row;
+  column-gap: 1rem;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 9999px;
+  width: fit-content;
+  padding: 8px 12px;
+}
+
+div.themes-container button {
+  border-radius: 50%;
+  padding: 6px 8px;
+  border-style: solid;
+  border-width: 0px;
+  background-color: transparent;
+}
+
+.btn-theme:not(.selected):hover svg {
+  stroke-width: 3px;
 }
 
 main {
   padding: 30px 10px;
   display: flex;
-  align-items: start;
-  justify-content: center;
   flex-direction: row;
+  justify-content: center;
+  align-items: start;
   column-gap: 5rem;
   row-gap: 5rem;
   flex-wrap: wrap;
-}
-
-textarea {
-  font-size: 1.2rem;
-}
-
-textarea::placeholder {
-  font-size: 1.2rem;
-}
-
-div.cta-buttons button {
-  padding: 2px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  border-radius: 15px;
-  border-style: solid;
-  border-width: 2px;
 }
 
 div.hero-section {
@@ -37,21 +75,42 @@ div.hero-section {
   flex-direction: column;
   justify-content: center;
   row-gap: 20px;
-  width: 500px;
+  flex-basis: 500px;
 }
 
-div.themes-container {
-  flex-direction: row;
+textarea {
+  font-size: 1.2rem;
+  border-width: 2px;
+  border-style: solid;
+  resize: none;
+  padding: 8px;
+  width: 100%;
 }
 
-h1 {
-  font-size: 1.5rem;
+textarea::placeholder {
+  font-size: 1.2rem;
 }
 
-header {
-  flex-direction: column;
-  row-gap: 20px;
-  padding: 10px;
+div.cta-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+div.cta-buttons button {
+  background-color: transparent;
+  cursor: pointer;
+  padding: 2px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 8px;
 }
 
 aside {
@@ -85,6 +144,7 @@ div.output {
   padding: 10px;
   overflow-y: auto;
   word-wrap: break-word;
+  /* border: none; */
 }
 
 div.output p.value {
@@ -92,7 +152,7 @@ div.output p.value {
 }
 
 div.output p.nothing {
-  width: 50%;
+  width: 80%;
   text-align: center;
   /* opacity: 0.5; */
   user-select: none;
@@ -138,7 +198,7 @@ section div#history:has(p.empty) {
 section div p.empty {
   text-align: center;
   opacity: 0.5;
-  user-select: none;
+  padding: 20px 0;
   width: 35%;
 }
 
@@ -175,7 +235,7 @@ section div ul li details summary {
 
 section div ul li button {
   position: absolute;
-  top: 3px;
+  top: 0px;
   right: 5px;
 }
 
@@ -185,7 +245,8 @@ section div ul li details div {
 
 section div ul li details div hr {
   background-color: red;
-  height: 2px;
+  height: 1px;
+  border: none;
 }
 
 section div ul li details div p strong {
@@ -246,6 +307,10 @@ footer {
 
   main {
     padding: 50px 25px;
+  }
+
+  div.output p.nothing {
+    width: 50%;
   }
 
   aside button {
