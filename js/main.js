@@ -1,6 +1,6 @@
 const trashIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="20" height="20" fill="#000000"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>`;
 
-const alertIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.68 127.83" width="30" height="30" fill="red">
+const alertIconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.68 127.83" width="30" height="30" fill="red">
   <path class="cls-1"
     d="m0,63.85C.03,28.49,28.49.02,63.84,0c35.14-.02,63.89,28.79,63.84,63.98-.05,35.22-28.77,63.9-63.96,63.85C28.41,127.79-.03,99.23,0,63.85Zm11.64.27c.15,29.21,23.6,52.08,53.23,51.92,27.99-.15,51.38-24.19,51.16-52.59-.22-28.81-23.82-51.78-53.09-51.67-28.19.1-51.46,23.85-51.31,52.35Z" />
   <path class="cls-1"
@@ -15,6 +15,13 @@ document.getElementById("light").addEventListener("click", applyLightTheme);
 document.getElementById("system").addEventListener("click", applySystemTheme);
 document.getElementById("dark").addEventListener("click", applyDarkTheme);
 
+const encryptBtn = document.getElementById("encrypt-btn");
+const decryptBtn = document.getElementById("decrypt-btn");
+const input = document.getElementById("input-text");
+const output = document.querySelector(".output");
+const outputContainer = document.getElementById("output-container");
+
+/* WATCHING CHANGES ON DESKTOP THEME */
 window
   .matchMedia("(prefers-color-scheme: dark)")
   .addEventListener("change", (e) => {
@@ -25,6 +32,7 @@ window
     }
   });
 
+/* THEME BUTTONS (STYLES) */
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
     if (!button.classList.contains("selected")) {
@@ -39,6 +47,7 @@ buttons.forEach((button) => {
   });
 });
 
+/* LOADING THEME AND HISTORY */
 document.addEventListener("DOMContentLoaded", () => {
   /* Check and load THEME */
   const theme = localStorage.getItem("theme");
@@ -63,6 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!history || history.length == 0) historyEmptyMessage();
 });
 
+/* ENCRYPT & DECRYPT BUTTONS (ONCLICK EVENTS) */
+encryptBtn.addEventListener("click", () => {
+  processText(encrypt);
+});
+
+decryptBtn.addEventListener("click", () => {
+  processText(decrypt);
+});
+
+/* THEMES */
 function applyLightTheme() {
   localStorage.setItem("theme", "light");
   document.getElementById("theme-style").href = "css/light-theme.css";
@@ -85,20 +104,7 @@ function applyDarkTheme() {
   document.getElementById("theme-style").href = "css/dark-theme.css";
 }
 
-const encryptBtn = document.getElementById("encrypt-btn");
-const decryptBtn = document.getElementById("decrypt-btn");
-const input = document.getElementById("input-text");
-const output = document.querySelector(".output");
-const outputContainer = document.getElementById("output-container");
-
-encryptBtn.addEventListener("click", () => {
-  processText(encrypt);
-});
-
-decryptBtn.addEventListener("click", () => {
-  processText(decrypt);
-});
-
+/* PROCESS TEXT */
 function encrypt(input) {
   const upperCase = /[A-Z]/;
   const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'"·;$#%&\/~¡!¿?]/g;
@@ -183,6 +189,35 @@ function insertButton(container, input, output) {
   }
 }
 
+function processText(callback) {
+  try {
+    const inputValue = input.value;
+    const outputValue = callback(inputValue);
+
+    output.innerHTML = `<p class="value">${outputValue}</p>`;
+
+    /* Update history */
+    updateHistory(inputValue, outputValue);
+
+    /* Create & Show button */
+    insertButton(outputContainer, inputValue, outputValue);
+  } catch (error) {
+    /* Show the error message */
+    const alertContainer = document.createElement("div");
+    alertContainer.setAttribute("id", "alert-container");
+    alertContainer.innerHTML = alertIconSvg + `<span>${error.message}</span>`;
+    document.body.appendChild(alertContainer);
+
+    setTimeout(() => {
+      alertContainer.classList.add("hiding");
+    }, 3000);
+    setTimeout(() => {
+      alertContainer.remove();
+    }, 5000);
+  }
+}
+
+/* HISTORY */
 function updateHistory(input, output) {
   const history = JSON.parse(localStorage.getItem("history")) ?? [];
 
@@ -246,32 +281,4 @@ function updateHistory(input, output) {
 function historyEmptyMessage() {
   const container = document.getElementById("history");
   container.innerHTML = `<p class="empty">Tu historial se encuentra vacío</p>`;
-}
-
-function processText(callback) {
-  try {
-    const inputValue = input.value;
-    const outputValue = callback(inputValue);
-
-    output.innerHTML = `<p class="value">${outputValue}</p>`;
-
-    /* Update history */
-    updateHistory(inputValue, outputValue);
-
-    /* Create & Show button */
-    insertButton(outputContainer, inputValue, outputValue);
-  } catch (error) {
-    /* Show the error message */
-    const alertContainer = document.createElement("div");
-    alertContainer.setAttribute("id", "alert-container");
-    alertContainer.innerHTML = alertIcon + `<span>${error.message}</span>`;
-    document.body.appendChild(alertContainer);
-
-    setTimeout(() => {
-      alertContainer.classList.add("hiding");
-    }, 3000);
-    setTimeout(() => {
-      alertContainer.remove();
-    }, 5000);
-  }
 }
