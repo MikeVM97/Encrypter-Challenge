@@ -59,9 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Check and load History */
   const history = JSON.parse(localStorage.getItem("history"));
-
-  if (history) actualizarLista();
-
+  if (history) updateHistory();
   if (!history || history.length == 0) historyEmptyMessage();
 });
 
@@ -165,18 +163,6 @@ function decrypt(input) {
   });
 }
 
-function updateHistory(input, output) {
-  /* Update history in localStorage */
-  const history = JSON.parse(localStorage.getItem("history")) ?? [];
-
-  history.push([input, output]);
-
-  localStorage.setItem("history", JSON.stringify(history));
-
-  /* Update history in real time */
-  actualizarLista();
-}
-
 function insertButton(container, input, output) {
   if (container.children.length === 2 && input.length > 0) {
     const button = document.createElement("button");
@@ -197,39 +183,16 @@ function insertButton(container, input, output) {
   }
 }
 
-function updateHistoryNow(unorderedList, history) {
-  const li = document.createElement("li");
-  const details = document.createElement("details");
-  const button = document.createElement("button");
-  button.setAttribute("type", "button");
-  button.setAttribute("id", "delete-item");
-  button.innerHTML = trashIconSvg;
-
-  const html = `
-  <summary>
-    ${history.length}
-  </summary>
-  <div>
-    <p>
-      Entrada:
-      <strong>${history[history.length - 1][0]}</strong>
-    </p>
-    <hr/><hr/>
-    <p>
-      Salida:
-      <strong>${history[history.length - 1][1]}</strong>
-    </p>
-  </div>`;
-
-  details.innerHTML = html;
-  li.appendChild(details);
-  li.appendChild(button);
-  unorderedList.appendChild(li);
-}
-
-function actualizarLista() {
+function updateHistory(input, output) {
   const history = JSON.parse(localStorage.getItem("history")) ?? [];
 
+  /* Update history in localStorage */
+  if (input && output) {
+    history.push([input, output]);
+    localStorage.setItem("history", JSON.stringify(history));
+  }
+
+  /* Update history in real time */
   if (!history || history.length === 0) {
     historyEmptyMessage();
     return;
@@ -273,7 +236,7 @@ function actualizarLista() {
         .slice(0, index)
         .concat(history.slice(index + 1));
       localStorage.setItem("history", JSON.stringify(newHistory));
-      actualizarLista();
+      updateHistory();
     });
   });
 
