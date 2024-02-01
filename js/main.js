@@ -103,7 +103,7 @@ decryptBtn.addEventListener("click", () => {
 
 function encrypt(input) {
   const upperCase = /[A-Z]/;
-  const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'".·;,$#%&\/~¡!¿?]/g;
+  const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'"·;$#%&\/~¡!¿?]/g;
   if (upperCase.test(input) && specials.test(input)) {
     throw new Error(
       "No se permiten letras en mayúscula ni caracteres especiales"
@@ -135,7 +135,7 @@ function encrypt(input) {
 
 function decrypt(input) {
   const upperCase = /[A-Z]/;
-  const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'".·;,$#%&\/~¡!¿?]/g;
+  const specials = /[áéíóúÁÉÍÓÚàèìòùÀÈÌÒÙ@\^¨ç´`*={}+\-_'"·;$#%&\/~¡!¿?]/g;
   if (upperCase.test(input) && specials.test(input)) {
     throw new Error(
       "No se permiten letras en mayúscula ni caracteres especiales"
@@ -180,12 +180,19 @@ function updateHistory(input, output) {
 function insertButton(container, input, output) {
   if (container.children.length === 2 && input.length > 0) {
     const button = document.createElement("button");
+    button.setAttribute("id", "copy-text");
     button.innerHTML = "Copiar texto";
-
     container.appendChild(button);
+  }
 
-    button.addEventListener("click", () => {
-      navigator.clipboard.writeText(output);
+  const copyBtn = document.getElementById("copy-text");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(output);
+      } catch (error) {
+        console.error(error.message);
+      }
     });
   }
 }
